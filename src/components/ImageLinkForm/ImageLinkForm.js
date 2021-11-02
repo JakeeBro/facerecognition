@@ -1,5 +1,5 @@
 import React from 'react';
-import Tilty from 'react-tilty';
+// import Tilty from 'react-tilty';
 
 const ImageLinkForm = ({ onInputChange, onSubmit }) => {
 	return (

@@ -3,32 +3,30 @@ import Clarifai from 'clarifai';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
-import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import SignIn from './components/SignIn/SignIn';
-import Particles from 'react-particles-js';
+// import Particles from 'react-particles-js';
+import Page from './components/Page/Page';
 
 const app = new Clarifai.App({ apiKey: 'b1b74db0e49e466dac991e91b932d017'})
 
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 50,
-      density: {
-        enable: true,
-        value_area: 600
-      }
-    },
-    line_linked: {
-      shadow: {
-        enable: true,
-        color: '#3CA9D1',
-        blur: 5
-      }
-    }
-  }
-}
+// const particlesOptions = {
+//   particles: {
+//     number: {
+//       value: 50,
+//       density: {
+//         enable: true,
+//         value_area: 600
+//       }
+//     },
+//     line_linked: {
+//       shadow: {
+//         enable: true,
+//         color: '#3CA9D1',
+//         blur: 5
+//       }
+//     }
+//   }
+// }
 
 console.log(process.env.REACT_APP_CLARIFAI_API);
 
@@ -39,7 +37,8 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
-      route: 'signin'
+      route: 'signin',
+      isSignedIn: false
     }
   }
 
@@ -87,23 +86,29 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  onRouteChange = () => {
-    this.setState({route: 'home'})
+  onRouteChange = (destination) => {
+    if (this.state.route === 'signin' || this.state.route === 'register') {
+      this.setState({ isSignedIn: false})
+    } else if (this.state.route === 'home') {
+      this.setState({ isSignedIn: true})
+    }
+    this.setState({route: destination})
   }
 
   render() {
     return (
       <div className="App">
         {/*<Particles className='fixed o-50' style={{zIndex: '-10'}}params={particlesOptions}/>*/}
-        <Navigation />
+        <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn}/>
         <Logo />
-        { this.state.route === 'signin'
+{/*        { this.state.route === 'signin'
           ? <SignIn onRouteChange={this.onRouteChange} style={{zIndex: '10'}}/>
           : <div style={{zIndex: '10'}}>
               <Rank />
               <ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
             </div>
-        }
+        }*/}
+        <Page route={this.state.route} onRouteChange={this.onRouteChange} onInputChange={this.onInputChange}/>
         <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
       </div>
     );

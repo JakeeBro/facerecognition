@@ -34,6 +34,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      init: true,
       input: '',
       imageUrl: '',
       box: {},
@@ -87,19 +88,36 @@ class App extends Component {
   }
 
   onRouteChange = (destination) => {
-    if (this.state.route === 'signin' || this.state.route === 'register') {
+    this.setState({route: destination})
+    if (this.state.route === 'signin') {
+      this.setState({ isSignedIn: false})
+    } else if (this.state.route === 'register') {
       this.setState({ isSignedIn: false})
     } else if (this.state.route === 'home') {
       this.setState({ isSignedIn: true})
     }
-    this.setState({route: destination})
+  }
+
+  initApp = () => {
+    if (this.state.init === true) {
+      this.onRouteChange(this.state.route);
+      this.setState({ init: false});
+      console.log('Route: ' + this.state.route, 'Signed In: ' + this.state.isSignedIn, 'Init: ' + this.state.init);
+    }
+  }
+
+  onComponentDidMount = () => {
+    this.initApp();
   }
 
   render() {
     return (
       <div className="App">
         {/*<Particles className='fixed o-50' style={{zIndex: '-10'}}params={particlesOptions}/>*/}
-        <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn}/>
+        { this.state.isSignedIn === true
+          ? <Navigation onRouteChange={this.onRouteChange} isSignedIn={true}/>
+          : <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
+        }
         <Logo />
 {/*        { this.state.route === 'signin'
           ? <SignIn onRouteChange={this.onRouteChange} style={{zIndex: '10'}}/>

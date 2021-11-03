@@ -5,7 +5,7 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
 	if (isSignedIn === true) {
 		// console.log('SI True Path');
 		return (
-			<nav className='ma1 flex justify-end' style={{ height: '90px'}}>
+			<nav className='ma1 flex justify-end' style={{ height: '34px'}}>
 				{/*<Tilty className='link pointer flex items-center justify-center' options={{max: 25}} style={{ height: 50, width: 150, transformStyle: 'preserve-3d'}} glare={true} maxGlare={.5}>
 					<div className='absolute bg-white o-10' style={{ height: 50, width: 150}}></div>
 	  				<div className='b white f5' style={{ transform: 'translateZ(10px)' }}>Sign Out</div>

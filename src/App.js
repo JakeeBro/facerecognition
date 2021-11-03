@@ -87,15 +87,64 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  onRouteChange = (destination) => {
-    this.setState({route: destination})
-    if (this.state.route === 'signin') {
-      this.setState({ isSignedIn: false})
-    } else if (this.state.route === 'register') {
-      this.setState({ isSignedIn: false})
-    } else if (this.state.route === 'home') {
-      this.setState({ isSignedIn: true})
+  changeRoute = ({ route }) => {
+  switch (route) {
+      case 'signin':
+        this.setState({ isSignedIn: false })
+        console.log('signin s (f) Signed In: ' + this.state.isSignedIn);
+        break;
+      case 'register':
+        this.setState({ isSignedIn: false })
+        console.log('register r (f) Signed In: ' + this.state.isSignedIn);
+        break;
+      case 'home':
+        this.setState({ isSignedIn: true})
+        console.log('home (t) Signed In: ' + this.state.isSignedIn);
+        break;
+      default:
+        break;
     }
+  }
+
+  onRouteChange = (destination) => {
+    this.setState({route: destination}, () => {
+      switch (this.state.route) {
+        case 'signin':
+          this.setState({ isSignedIn: false})
+          break;
+        case 'register':
+          this.setState({ isSignedIn: false})
+          break;
+        case 'home':
+          this.setState({ isSignedIn: true})
+          break;
+        default:
+          break;
+      }
+    })
+    // switch (this.state.route) {
+    //   case 'signin':
+    //     this.setState({ isSignedIn: false })
+    //     console.log('signin s (f) Signed In: ' + this.state.isSignedIn);
+    //     break;
+    //   case 'register':
+    //     this.setState({ isSignedIn: false })
+    //     console.log('register r (f) Signed In: ' + this.state.isSignedIn);
+    //     break;
+    //   case 'home':
+    //     this.setState({ isSignedIn: true})
+    //     console.log('home (t) Signed In: ' + this.state.isSignedIn);
+    //     break;
+    //   default:
+    //     break;
+    // }
+    // if (this.state.route === 'signin') {
+    //   this.setState({ isSignedIn: false})
+    // } else if (this.state.route === 'register') {
+    //   this.setState({ isSignedIn: false})
+    // } else if (this.state.route === 'home') {
+    //   this.setState({ isSignedIn: true})
+    // }
   }
 
   initApp = () => {

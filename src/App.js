@@ -28,13 +28,10 @@ const app = new Clarifai.App({ apiKey: 'b1b74db0e49e466dac991e91b932d017'})
 //   }
 // }
 
-console.log(process.env.REACT_APP_CLARIFAI_API);
-
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      init: true,
       input: '',
       imageUrl: '',
       box: {},
@@ -87,25 +84,6 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  changeRoute = ({ route }) => {
-  switch (route) {
-      case 'signin':
-        this.setState({ isSignedIn: false })
-        console.log('signin s (f) Signed In: ' + this.state.isSignedIn);
-        break;
-      case 'register':
-        this.setState({ isSignedIn: false })
-        console.log('register r (f) Signed In: ' + this.state.isSignedIn);
-        break;
-      case 'home':
-        this.setState({ isSignedIn: true})
-        console.log('home (t) Signed In: ' + this.state.isSignedIn);
-        break;
-      default:
-        break;
-    }
-  }
-
   onRouteChange = (destination) => {
     this.setState({route: destination}, () => {
       switch (this.state.route) {
@@ -122,48 +100,14 @@ class App extends Component {
           break;
       }
     })
-    // switch (this.state.route) {
-    //   case 'signin':
-    //     this.setState({ isSignedIn: false })
-    //     console.log('signin s (f) Signed In: ' + this.state.isSignedIn);
-    //     break;
-    //   case 'register':
-    //     this.setState({ isSignedIn: false })
-    //     console.log('register r (f) Signed In: ' + this.state.isSignedIn);
-    //     break;
-    //   case 'home':
-    //     this.setState({ isSignedIn: true})
-    //     console.log('home (t) Signed In: ' + this.state.isSignedIn);
-    //     break;
-    //   default:
-    //     break;
-    // }
-    // if (this.state.route === 'signin') {
-    //   this.setState({ isSignedIn: false})
-    // } else if (this.state.route === 'register') {
-    //   this.setState({ isSignedIn: false})
-    // } else if (this.state.route === 'home') {
-    //   this.setState({ isSignedIn: true})
-    // }
-  }
-
-  initApp = () => {
-    if (this.state.init === true) {
-      this.onRouteChange(this.state.route);
-      this.setState({ init: false});
-      console.log('Route: ' + this.state.route, 'Signed In: ' + this.state.isSignedIn, 'Init: ' + this.state.init);
-    }
-  }
-
-  onComponentDidMount = () => {
-    this.initApp();
   }
 
   render() {
+    let { isSignedIn, imageUrl, route, box } = this.state;
     return (
       <div className="App">
         {/*<Particles className='fixed o-50' style={{zIndex: '-10'}}params={particlesOptions}/>*/}
-        { this.state.isSignedIn === true
+        { isSignedIn === true
           ? <Navigation onRouteChange={this.onRouteChange} isSignedIn={true}/>
           : <Navigation onRouteChange={this.onRouteChange} isSignedIn={false}/>
         }
@@ -175,8 +119,8 @@ class App extends Component {
               <ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
             </div>
         }*/}
-        <Page route={this.state.route} onRouteChange={this.onRouteChange} onInputChange={this.onInputChange}/>
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+        <Page route={route} onRouteChange={this.onRouteChange} onInputChange={this.onInputChange}/>
+        <FaceRecognition box={box} imageUrl={imageUrl}/>
       </div>
     );
   }

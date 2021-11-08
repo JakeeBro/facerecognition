@@ -104,6 +104,7 @@ class App extends Component {
 
   render() {
     let { isSignedIn, imageUrl, route, box } = this.state;
+    console.log('Sign In: ' + isSignedIn, ' URL: ' + imageUrl, ' Route: ' + route, ' Box: ' + box)
     return (
       <div className="App">
         {/*<Particles className='fixed o-50' style={{zIndex: '-10'}}params={particlesOptions}/>*/}
@@ -119,7 +120,7 @@ class App extends Component {
               <ImageLinkForm onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
             </div>
         }*/}
-        <Page route={route} onRouteChange={this.onRouteChange} onInputChange={this.onInputChange}/>
+        <Page route={route} onRouteChange={this.onRouteChange} onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
         <FaceRecognition box={box} imageUrl={imageUrl}/>
       </div>
     );

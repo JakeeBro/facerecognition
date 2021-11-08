@@ -4,7 +4,7 @@ import Register from './../Register/Register';
 import Rank from './../Rank/Rank';
 import ImageLinkForm from './../ImageLinkForm/ImageLinkForm';
 
-const Page = ({ route, onRouteChange, onInputChange }) => {
+const Page = ({ route, onRouteChange, onInputChange, onSubmit }) => {
 	switch (route) {
 		case 'signin':
 			return (
@@ -18,7 +18,7 @@ const Page = ({ route, onRouteChange, onInputChange }) => {
 			return (
 				<div>
 					<Rank />
-					<ImageLinkForm onInputChange={onInputChange} style={{zIndex: '10'}}/>
+					<ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} style={{zIndex: '10'}}/>
 				</div>
 			)
 		default:
